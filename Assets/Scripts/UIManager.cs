@@ -7,8 +7,6 @@ public class UIManager : MonoBehaviour
 {
     private TextMeshProUGUI speedometerText;
 
-	readonly float CONVERSION_VALUE = 3.6f;
-
 	void Start()
 	{
 		speedometerText = GameObject.Find("SpeedometerText").GetComponent<TextMeshProUGUI>();
@@ -16,8 +14,6 @@ public class UIManager : MonoBehaviour
 
 	public virtual void UpdateSpeedometer(float speed)
 	{
-		float s = speed * CONVERSION_VALUE;
-
-		speedometerText.text = Mathf.Abs(Mathf.Round(s)) + " Km/H";
+		speedometerText.text = Mathf.Abs(Mathf.Round(speed)) + " Km/H";
 	}
 }
