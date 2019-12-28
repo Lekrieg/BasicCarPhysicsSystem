@@ -17,6 +17,6 @@ public class InputManager : MonoBehaviour
 	{
 		throttle = Input.GetAxis("Acceleration");
 		steer = Input.GetAxis("Steering");
-		brake = Input.GetKey(KeyCode.Space);
+		brake = Input.GetButton("Brake");
 	}
 }

@@ -4,7 +4,34 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    public GameObject objectToFollow;
+	public Transform objectToFollow;
+	public Vector3 offset;
+	public float followSpeed = 10;
+	public float lookSpeed = 10;
+
+	private void LateUpdate()
+	{
+		LookAtTarget();
+		MoveToTarget();
+	}
+
+	public void LookAtTarget()
+	{
+		Vector3 _lookDirection = objectToFollow.position - transform.position;
+		Quaternion _rot = Quaternion.LookRotation(_lookDirection, Vector3.up);
+		transform.rotation = Quaternion.Lerp(transform.rotation, _rot, lookSpeed * Time.deltaTime);
+	}
+
+	public void MoveToTarget()
+	{
+		Vector3 _targetPos = objectToFollow.position + 
+							 objectToFollow.forward * offset.z + 
+							 objectToFollow.right * offset.x + 
+							 objectToFollow.up * offset.y;
+		transform.position = Vector3.Lerp(transform.position, _targetPos, followSpeed * Time.deltaTime);
+	}
+
+    /* public GameObject objectToFollow;
 	public float distance = 4f;
 	public float height = 2f;
 	public float dampening = 1f;
@@ -43,5 +70,5 @@ public class CameraController : MonoBehaviour
 		{
 			camMode = (camMode + 1) % 2; // 0 e 1, se for ter mais é só aumentar o valor
 		}
-	}
+	} */
 }

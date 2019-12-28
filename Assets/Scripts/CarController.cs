@@ -24,6 +24,7 @@ public class CarController : MonoBehaviour
 	[Header("SteeringWheel and pedals")]
 	public GameObject driverSteeringWheel;
 	public GameObject accelerationPedal;
+	public GameObject brakePedal;
 
 	[Header("Car physics stuffy")]
 	public float idealRPM = 50f;
@@ -51,7 +52,7 @@ public class CarController : MonoBehaviour
 		Accelerate();
 		Steer();
 		TurnSteeringWheel();
-		//UpdateWheelMeshsRotation();
+		UpdateWheelMeshsRotation();
 	}
 
 	public float GetSpeed()
@@ -63,6 +64,15 @@ public class CarController : MonoBehaviour
 	void Accelerate()
 	{
 		float scaledTorque = inputManager.throttle * torque;
+
+		if(scaledTorque < 0)
+		{
+			AnimatePedal(brakePedal);
+		}
+		else
+		{
+			AnimatePedal(accelerationPedal);
+		}
 
 		if(wheelColliderRL.GetComponent<WheelCollider>().rpm < idealRPM)
 		{
@@ -95,7 +105,18 @@ public class CarController : MonoBehaviour
 	}
 	void AnimatePedal(GameObject pedal)
 	{
-		
+		// pedal rot * dir• amounttomovemax•accelAxis
+		if(pedal)
+		{
+			// Quaternion pedalRotation = pedal.transform.localRotation;
+			// Vector3 pedalDiretion = pedal.transform.position.normalized;
+			float angle = Mathf.Abs(-30f * inputManager.throttle);
+
+			pedal.transform.localRotation = Quaternion.Euler(angle, 0f, 0f);
+
+			//Debug.Log(pedalRotation * pedalDiretion * angle);
+			Debug.Log(angle);
+		}
 	}
 
 	void Steer()
@@ -120,8 +141,7 @@ public class CarController : MonoBehaviour
 		foreach (GameObject meshItem in wheelMeshes)
 		{
 			meshItem.transform.Rotate(carRigidbody.velocity.magnitude *
-									 (transform.InverseTransformDirection(carRigidbody.velocity).z >= 0 ? 1 : -1) /
-									 (2 * Mathf.PI * 0.33f), 0f, 0f);
+									 (transform.InverseTransformDirection(carRigidbody.velocity).z >= 0 ? 1 : -1), 0f, 0f);
 		}
 	}
 }
