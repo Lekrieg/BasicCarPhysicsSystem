@@ -5,15 +5,19 @@ using UnityEngine;
 [RequireComponent(typeof(InputManager))]
 public class CarController : MonoBehaviour
 {
+	// TODO: Move the  object that the IK is looking for, varies between -0.4f, 0f, 0.4f
+
 	public enum DriveMode { Front, Rear, All };
 	public DriveMode driveMode = DriveMode.All;
+
+	[Header("Some other things")]
+	public GameObject headDirection;
 
 	[Header("Managers")]
 	public InputManager inputManager;
 	public UIManager uiManager;
 
 	[Header("Wheel colliders")]
-	// TODO: transformar em um array depois
 	public WheelCollider[] wheelColliders;
 
 	[Header("Wheel meshes")]
@@ -30,6 +34,7 @@ public class CarController : MonoBehaviour
 	public float maxAngle = 30f;
 	public float torque = 1000f;
 	public float brakeTorque = 400.0f;
+	public float friction = 25f;
 
 	public Transform centerOfMass;
 	public Rigidbody carRigidbody;
@@ -44,13 +49,18 @@ public class CarController : MonoBehaviour
 		}
 	}
 
+	void Update()
+	{
+		TurnSteeringWheel();
+		TurnHead();
+		UpdateWheelMeshsRotation();
+	}
+
 	void FixedUpdate()
 	{
 		uiManager.UpdateSpeedometer(GetSpeed());
 		Accelerate();
 		Steer();
-		TurnSteeringWheel();
-		UpdateWheelMeshsRotation();
 	}
 
 	public float GetSpeed()
@@ -72,26 +82,20 @@ public class CarController : MonoBehaviour
 			AnimatePedal(accelerationPedal);
 		}
 
-		if(wheelColliders[0].GetComponent<WheelCollider>().rpm < idealRPM)
+		if(wheelColliders[0].rpm < idealRPM)
 		{
-			scaledTorque = Mathf.Lerp(scaledTorque/10f, scaledTorque, wheelColliders[0].GetComponent<WheelCollider>().rpm / idealRPM);
+			scaledTorque = Mathf.Lerp(scaledTorque/5f, scaledTorque, wheelColliders[0].rpm / idealRPM);
 		}
 		else
 		{
-			scaledTorque = Mathf.Lerp(scaledTorque, 0, (wheelColliders[0].GetComponent<WheelCollider>().rpm - idealRPM) / (maxRPM - idealRPM));
+			scaledTorque = Mathf.Lerp(scaledTorque, 0, (wheelColliders[0].rpm - idealRPM) / (maxRPM - idealRPM));
 		}
 
 		for(int i = 0; i < wheelColliders.Length; i++)
 		{
-			wheelColliders[i].GetComponent<WheelCollider>().motorTorque = driveMode == DriveMode.Rear ? 0 : scaledTorque;
-			if(inputManager.brake)
-			{
-				wheelColliders[i].GetComponent<WheelCollider>().brakeTorque = brakeTorque;
-			}
-			else
-			{
-				wheelColliders[i].GetComponent<WheelCollider>().brakeTorque = 0;
-			}
+			wheelColliders[i].motorTorque = driveMode == DriveMode.Rear ? 0 : scaledTorque;
+
+			wheelColliders[i].brakeTorque = inputManager.brake ? brakeTorque : friction - Mathf.Abs(inputManager.throttle * friction);
 		}
 	}
 	void AnimatePedal(GameObject pedal)
@@ -116,11 +120,9 @@ public class CarController : MonoBehaviour
 
 		// Left
 		wheelColliders[0].steerAngle = angleInput;
-		// wheelColliders[0].GetComponent<WheelCollider>().transform.localEulerAngles = new Vector3(0f, angleInput, 0f);
 
 		// Right
 		wheelColliders[1].steerAngle = angleInput;
-		// wheelColliders[1].GetComponent<WheelCollider>().transform.localEulerAngles = new Vector3(0f, angleInput, 0f);
 	}
 	// Rotacao do pedal * angulo maximo de movimentacao * axisAcceleration
 	public void TurnSteeringWheel()
@@ -128,6 +130,14 @@ public class CarController : MonoBehaviour
 		if(driverSteeringWheel)
 		{
 			driverSteeringWheel.transform.localEulerAngles = new Vector3(0f, 0f, -(inputManager.steer * maxAngle));
+		}
+	}
+	void TurnHead()
+	{
+		if(headDirection)
+		{
+			float viewDirection = inputManager.steer * 0.5f;
+			headDirection.transform.localPosition = new Vector3(viewDirection, 0f, 0f);
 		}
 	}
 
