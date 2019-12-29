@@ -185,7 +185,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &253967981
 GameObject:
@@ -277,8 +277,14 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!146 &341544655 stripped
+WheelCollider:
+  m_CorrespondingSourceObject: {fileID: 2812921483688794799, guid: e3be6f1332117ba47b04fe3969823a90,
+    type: 3}
+  m_PrefabInstance: {fileID: 6079174921547737130}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &509210004
 GameObject:
   m_ObjectHideFlags: 0
@@ -320,7 +326,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &563654654 stripped
 GameObject:
@@ -483,6 +489,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 627679375}
   m_CullTransparentMesh: 0
+--- !u!146 &895764226 stripped
+WheelCollider:
+  m_CorrespondingSourceObject: {fileID: 236856222870517442, guid: e3be6f1332117ba47b04fe3969823a90,
+    type: 3}
+  m_PrefabInstance: {fileID: 6079174921547737130}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1042556422
 GameObject:
   m_ObjectHideFlags: 0
@@ -575,7 +587,7 @@ RectTransform:
   m_Children:
   - {fileID: 627679376}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -665,12 +677,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1326808670}
-  m_LocalRotation: {x: 0.06974913, y: -0.8117847, z: 0.09912007, w: 0.57124066}
-  m_LocalPosition: {x: 1.9125426, y: 1.6743926, z: 0.6258964}
-  m_LocalScale: {x: 0.50831985, y: 2.4242425, z: 1}
+  m_LocalRotation: {x: -0.053178675, y: 0.93668544, z: -0.16320026, w: -0.30521822}
+  m_LocalPosition: {x: 1.2278712, y: 2.3996117, z: 2.0840502}
+  m_LocalScale: {x: 0.67897785, y: 1.3380115, z: 1.4921066}
   m_Children: []
-  m_Father: {fileID: 1241676675}
-  m_RootOrder: 6
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1326808674
 MonoBehaviour:
@@ -688,6 +700,12 @@ MonoBehaviour:
   offset: {x: 0, y: 1.25, z: -3.14}
   followSpeed: 10
   lookSpeed: 50
+--- !u!146 &1448129931 stripped
+WheelCollider:
+  m_CorrespondingSourceObject: {fileID: 6388468127952027020, guid: e3be6f1332117ba47b04fe3969823a90,
+    type: 3}
+  m_PrefabInstance: {fileID: 6079174921547737130}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1794464496 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4200293759201195222, guid: e3be6f1332117ba47b04fe3969823a90,
@@ -786,8 +804,14 @@ Transform:
   m_LocalScale: {x: 100, y: 1, z: 100}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!146 &2103352280 stripped
+WheelCollider:
+  m_CorrespondingSourceObject: {fileID: 6767064527491388637, guid: e3be6f1332117ba47b04fe3969823a90,
+    type: 3}
+  m_PrefabInstance: {fileID: 6079174921547737130}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6079174921547737130
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -795,6 +819,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 41432352, guid: e3be6f1332117ba47b04fe3969823a90, type: 3}
+      propertyPath: wheelColliders.Array.size
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 41432352, guid: e3be6f1332117ba47b04fe3969823a90, type: 3}
       propertyPath: uiManager
       value: 
@@ -807,10 +835,63 @@ PrefabInstance:
       propertyPath: brakePedal
       value: 
       objectReference: {fileID: 1794464496}
+    - target: {fileID: 41432352, guid: e3be6f1332117ba47b04fe3969823a90, type: 3}
+      propertyPath: brakeTorque
+      value: 20000
+      objectReference: {fileID: 0}
+    - target: {fileID: 41432352, guid: e3be6f1332117ba47b04fe3969823a90, type: 3}
+      propertyPath: maxRPM
+      value: 600
+      objectReference: {fileID: 0}
+    - target: {fileID: 41432352, guid: e3be6f1332117ba47b04fe3969823a90, type: 3}
+      propertyPath: torque
+      value: 600
+      objectReference: {fileID: 0}
+    - target: {fileID: 41432352, guid: e3be6f1332117ba47b04fe3969823a90, type: 3}
+      propertyPath: wheelColliders.Array.data[0]
+      value: 
+      objectReference: {fileID: 1448129931}
+    - target: {fileID: 41432352, guid: e3be6f1332117ba47b04fe3969823a90, type: 3}
+      propertyPath: wheelColliders.Array.data[1]
+      value: 
+      objectReference: {fileID: 2103352280}
+    - target: {fileID: 41432352, guid: e3be6f1332117ba47b04fe3969823a90, type: 3}
+      propertyPath: wheelColliders.Array.data[2]
+      value: 
+      objectReference: {fileID: 341544655}
+    - target: {fileID: 41432352, guid: e3be6f1332117ba47b04fe3969823a90, type: 3}
+      propertyPath: wheelColliders.Array.data[3]
+      value: 
+      objectReference: {fileID: 895764226}
+    - target: {fileID: 236856222870517442, guid: e3be6f1332117ba47b04fe3969823a90,
+        type: 3}
+      propertyPath: m_Mass
+      value: 75
+      objectReference: {fileID: 0}
+    - target: {fileID: 2812921483688794799, guid: e3be6f1332117ba47b04fe3969823a90,
+        type: 3}
+      propertyPath: m_Mass
+      value: 75
+      objectReference: {fileID: 0}
+    - target: {fileID: 6388468127952027020, guid: e3be6f1332117ba47b04fe3969823a90,
+        type: 3}
+      propertyPath: m_Mass
+      value: 75
+      objectReference: {fileID: 0}
+    - target: {fileID: 6767064527491388637, guid: e3be6f1332117ba47b04fe3969823a90,
+        type: 3}
+      propertyPath: m_Mass
+      value: 75
+      objectReference: {fileID: 0}
     - target: {fileID: 8952066345502690098, guid: e3be6f1332117ba47b04fe3969823a90,
         type: 3}
       propertyPath: m_Name
       value: Car
+      objectReference: {fileID: 0}
+    - target: {fileID: 8952066345502690101, guid: e3be6f1332117ba47b04fe3969823a90,
+        type: 3}
+      propertyPath: m_Mass
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 8952066345502690105, guid: e3be6f1332117ba47b04fe3969823a90,
         type: 3}
@@ -850,7 +931,7 @@ PrefabInstance:
     - target: {fileID: 8952066345502690105, guid: e3be6f1332117ba47b04fe3969823a90,
         type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8952066345502690105, guid: e3be6f1332117ba47b04fe3969823a90,
         type: 3}
