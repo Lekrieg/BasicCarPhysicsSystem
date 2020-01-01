@@ -235,16 +235,16 @@ WheelCollider:
   m_Mass: 75
   m_WheelDampingRate: 0.25
   m_ForwardFriction:
-    m_ExtremumSlip: 0.4
-    m_ExtremumValue: 1
-    m_AsymptoteSlip: 0.8
-    m_AsymptoteValue: 0.5
+    m_ExtremumSlip: 1
+    m_ExtremumValue: 2
+    m_AsymptoteSlip: 1
+    m_AsymptoteValue: 2
     m_Stiffness: 1
   m_SidewaysFriction:
-    m_ExtremumSlip: 0.2
-    m_ExtremumValue: 1
-    m_AsymptoteSlip: 0.5
-    m_AsymptoteValue: 0.75
+    m_ExtremumSlip: 1
+    m_ExtremumValue: 2
+    m_AsymptoteSlip: 1
+    m_AsymptoteValue: 2
     m_Stiffness: 1
   m_Enabled: 1
 --- !u!1 &3204071400878140743
@@ -483,16 +483,16 @@ WheelCollider:
   m_Mass: 75
   m_WheelDampingRate: 0.25
   m_ForwardFriction:
-    m_ExtremumSlip: 0.4
-    m_ExtremumValue: 1
-    m_AsymptoteSlip: 0.8
-    m_AsymptoteValue: 0.5
+    m_ExtremumSlip: 1
+    m_ExtremumValue: 2
+    m_AsymptoteSlip: 1
+    m_AsymptoteValue: 2
     m_Stiffness: 1
   m_SidewaysFriction:
-    m_ExtremumSlip: 0.2
-    m_ExtremumValue: 1
-    m_AsymptoteSlip: 0.5
-    m_AsymptoteValue: 0.75
+    m_ExtremumSlip: 1
+    m_ExtremumValue: 2
+    m_AsymptoteSlip: 1
+    m_AsymptoteValue: 2
     m_Stiffness: 1
   m_Enabled: 1
 --- !u!1 &7391782011554533592
@@ -544,16 +544,16 @@ WheelCollider:
   m_Mass: 75
   m_WheelDampingRate: 0.25
   m_ForwardFriction:
-    m_ExtremumSlip: 0.4
-    m_ExtremumValue: 1
-    m_AsymptoteSlip: 0.8
-    m_AsymptoteValue: 0.5
+    m_ExtremumSlip: 1
+    m_ExtremumValue: 2
+    m_AsymptoteSlip: 1
+    m_AsymptoteValue: 2
     m_Stiffness: 1
   m_SidewaysFriction:
-    m_ExtremumSlip: 0.2
-    m_ExtremumValue: 1
-    m_AsymptoteSlip: 0.5
-    m_AsymptoteValue: 0.75
+    m_ExtremumSlip: 1
+    m_ExtremumValue: 2
+    m_AsymptoteSlip: 1
+    m_AsymptoteValue: 2
     m_Stiffness: 1
   m_Enabled: 1
 --- !u!1 &7581816132739601798
@@ -730,16 +730,16 @@ WheelCollider:
   m_Mass: 75
   m_WheelDampingRate: 0.25
   m_ForwardFriction:
-    m_ExtremumSlip: 0.4
-    m_ExtremumValue: 1
-    m_AsymptoteSlip: 0.8
-    m_AsymptoteValue: 0.5
+    m_ExtremumSlip: 1
+    m_ExtremumValue: 2
+    m_AsymptoteSlip: 1
+    m_AsymptoteValue: 2
     m_Stiffness: 1
   m_SidewaysFriction:
-    m_ExtremumSlip: 0.2
-    m_ExtremumValue: 1
-    m_AsymptoteSlip: 0.5
-    m_AsymptoteValue: 0.75
+    m_ExtremumSlip: 1
+    m_ExtremumValue: 2
+    m_AsymptoteSlip: 1
+    m_AsymptoteValue: 2
     m_Stiffness: 1
   m_Enabled: 1
 --- !u!1 &8952066344436476538
@@ -1631,25 +1631,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   driveMode: 2
+  headDirection: {fileID: 4551478133507189821}
   inputManager: {fileID: 41432353}
   uiManager: {fileID: 0}
-  wheelColliderFL: {fileID: 5428867928108017989}
-  wheelColliderFR: {fileID: 7789743904129753349}
-  wheelColliderRL: {fileID: 2973524888652207216}
-  wheelColliderRR: {fileID: 7391782011554533592}
+  wheelColliders:
+  - {fileID: 6388468127952027020}
+  - {fileID: 6767064527491388637}
+  - {fileID: 2812921483688794799}
+  - {fileID: 236856222870517442}
   wheelMeshes:
   - {fileID: 8952066345874877030}
   - {fileID: 8952066346459687969}
   - {fileID: 8952066344748280049}
   - {fileID: 8952066346344550793}
   driverSteeringWheel: {fileID: 8952066346424804332}
-  accelerationPedal: {fileID: 1416416099}
-  brakePedal: {fileID: 0}
+  accelerationPedal: {fileID: 3204071400878140743}
+  brakePedal: {fileID: 4200293759201195222}
   idealRPM: 50
-  maxRPM: 1100
+  maxRPM: 600
   maxAngle: 30
-  torque: 500
-  brakeTorque: 5000
+  torque: 600
+  brakeTorque: 20000
+  friction: 25
   centerOfMass: {fileID: 1377394922850508648}
   carRigidbody: {fileID: 8952066345502690101}
 --- !u!114 &41432353

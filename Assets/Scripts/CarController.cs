@@ -32,6 +32,7 @@ public class CarController : MonoBehaviour
 	public float idealRPM = 50f;
 	public float maxRPM = 1000f;
 	public float maxAngle = 30f;
+	float angleInput;
 	public float torque = 1000f;
 	public float brakeTorque = 400.0f;
 	public float friction = 25f;
@@ -116,13 +117,20 @@ public class CarController : MonoBehaviour
 
 	void Steer()
 	{
-		float angleInput = Mathf.Lerp(wheelColliders[0].steerAngle, maxAngle * inputManager.steer, Time.deltaTime * 10);
+		if(inputManager.steer > 0.7f || inputManager.steer < -0.7f)
+		{
+			angleInput = Mathf.Lerp(angleInput, inputManager.steer, Time.deltaTime * 4);
+		}
+		else
+		{
+			angleInput = Mathf.Lerp(angleInput, inputManager.steer, Time.deltaTime * 2);
+		}
 
 		// Left
-		wheelColliders[0].steerAngle = angleInput;
+		wheelColliders[0].steerAngle = angleInput * maxAngle;
 
 		// Right
-		wheelColliders[1].steerAngle = angleInput;
+		wheelColliders[1].steerAngle = angleInput * maxAngle;
 	}
 	// Rotacao do pedal * angulo maximo de movimentacao * axisAcceleration
 	public void TurnSteeringWheel()
@@ -137,6 +145,7 @@ public class CarController : MonoBehaviour
 		if(headDirection)
 		{
 			float viewDirection = inputManager.steer * 0.5f;
+			// usar um lerp da posicao atual ate a direcao especifica
 			headDirection.transform.localPosition = new Vector3(viewDirection, 0f, 0f);
 		}
 	}
