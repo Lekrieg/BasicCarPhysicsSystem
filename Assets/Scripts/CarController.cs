@@ -52,6 +52,7 @@ public class CarController : MonoBehaviour
 
 	void Update()
 	{
+		AnimateBrakePedal();
 		TurnSteeringWheel();
 		TurnHead();
 		UpdateWheelMeshsRotation();
@@ -74,13 +75,9 @@ public class CarController : MonoBehaviour
 	{
 		float scaledTorque = inputManager.throttle * torque;
 
-		if(scaledTorque < 0)
+		if(Mathf.Abs(scaledTorque) > 0)
 		{
-			AnimatePedal(brakePedal);
-		}
-		else
-		{
-			AnimatePedal(accelerationPedal);
+			AnimateAccelerationPedal();
 		}
 
 		if(wheelColliders[0].rpm < idealRPM)
@@ -99,19 +96,32 @@ public class CarController : MonoBehaviour
 			wheelColliders[i].brakeTorque = inputManager.brake ? brakeTorque : friction - Mathf.Abs(inputManager.throttle * friction);
 		}
 	}
-	void AnimatePedal(GameObject pedal)
+	void AnimateAccelerationPedal()
 	{
 		// pedal rot * dir• amounttomovemax•accelAxis
-		if(pedal)
+		if(accelerationPedal)
 		{
-			// Quaternion pedalRotation = pedal.transform.localRotation;
-			// Vector3 pedalDiretion = pedal.transform.position.normalized;
 			float angle = Mathf.Abs(-30f * inputManager.throttle);
 
-			pedal.transform.localRotation = Quaternion.Euler(angle, 0f, 0f);
+			accelerationPedal.transform.localRotation = Quaternion.Euler(angle, 0f, 0f);
+		}
+	}
 
-			//Debug.Log(pedalRotation * pedalDiretion * angle);
-			Debug.Log(angle);
+	float brakePedalAngle;
+	void AnimateBrakePedal()
+	{
+		if(brakePedal)
+		{
+			if(inputManager.brake)
+			{
+				brakePedalAngle = Mathf.Lerp(brakePedalAngle, 1, Time.deltaTime * 4);
+			}
+			else
+			{
+				brakePedalAngle = Mathf.Lerp(brakePedalAngle, 0, Time.deltaTime * 2);
+			}
+
+			brakePedal.transform.localRotation = Quaternion.Euler(brakePedalAngle * maxAngle, 0f, 0f);
 		}
 	}
 
@@ -137,7 +147,7 @@ public class CarController : MonoBehaviour
 	{
 		if(driverSteeringWheel)
 		{
-			driverSteeringWheel.transform.localEulerAngles = new Vector3(0f, 0f, -(inputManager.steer * maxAngle));
+			driverSteeringWheel.transform.localEulerAngles = new Vector3(0f, 0f, -(angleInput * maxAngle));
 		}
 	}
 	void TurnHead()
