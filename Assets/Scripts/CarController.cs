@@ -12,6 +12,8 @@ public class CarController : MonoBehaviour
 
 	[Header("Some other things")]
 	public GameObject headDirection;
+	private GameObject carSeat;
+	private GameObject playerPrefabModel;
 
 	[Header("Managers")]
 	public InputManager inputManager;
@@ -40,11 +42,21 @@ public class CarController : MonoBehaviour
 	public Transform centerOfMass;
 	public Rigidbody carRigidbody;
 
+	private void Awake()
+	{
+		carSeat = GameObject.Find("Seat");
+
+		GameObject playerModel = Resources.Load<GameObject>("Prefabs/Haruko");
+		playerPrefabModel = Instantiate(playerModel, carSeat.transform);
+
+		playerPrefabModel.transform.parent = carSeat.transform;
+	}
+
 	void Start()
 	{
 		inputManager = GetComponent<InputManager>();
 
-		if(centerOfMass)
+		if (centerOfMass)
 		{
 			carRigidbody.centerOfMass = centerOfMass.localPosition;
 		}
@@ -68,28 +80,28 @@ public class CarController : MonoBehaviour
 	public float GetSpeed()
 	{
 		return wheelColliders[0].radius * Mathf.PI *
-			   wheelColliders[0].rpm * 60f/1000f;
+			   wheelColliders[0].rpm * 60f / 1000f;
 	}
 
 	void Accelerate()
 	{
 		float scaledTorque = inputManager.throttle * torque;
 
-		if(Mathf.Abs(scaledTorque) > 0)
+		if (Mathf.Abs(scaledTorque) > 0)
 		{
 			AnimateAccelerationPedal();
 		}
 
-		if(wheelColliders[0].rpm < idealRPM)
+		if (wheelColliders[0].rpm < idealRPM)
 		{
-			scaledTorque = Mathf.Lerp(scaledTorque/5f, scaledTorque, wheelColliders[0].rpm / idealRPM);
+			scaledTorque = Mathf.Lerp(scaledTorque / 5f, scaledTorque, wheelColliders[0].rpm / idealRPM);
 		}
 		else
 		{
 			scaledTorque = Mathf.Lerp(scaledTorque, 0, (wheelColliders[0].rpm - idealRPM) / (maxRPM - idealRPM));
 		}
 
-		for(int i = 0; i < wheelColliders.Length; i++)
+		for (int i = 0; i < wheelColliders.Length; i++)
 		{
 			wheelColliders[i].motorTorque = driveMode == DriveMode.Rear ? 0 : scaledTorque;
 
@@ -99,7 +111,7 @@ public class CarController : MonoBehaviour
 	void AnimateAccelerationPedal()
 	{
 		// pedal rot * dir• amounttomovemax•accelAxis
-		if(accelerationPedal)
+		if (accelerationPedal)
 		{
 			float angle = Mathf.Abs(-30f * inputManager.throttle);
 
@@ -110,9 +122,9 @@ public class CarController : MonoBehaviour
 	float brakePedalAngle;
 	void AnimateBrakePedal()
 	{
-		if(brakePedal)
+		if (brakePedal)
 		{
-			if(inputManager.brake)
+			if (inputManager.brake)
 			{
 				brakePedalAngle = Mathf.Lerp(brakePedalAngle, 1, Time.deltaTime * 4);
 			}
@@ -127,7 +139,7 @@ public class CarController : MonoBehaviour
 
 	void Steer()
 	{
-		if(inputManager.steer > 0.7f || inputManager.steer < -0.7f)
+		if (inputManager.steer > 0.7f || inputManager.steer < -0.7f)
 		{
 			angleInput = Mathf.Lerp(angleInput, inputManager.steer, Time.deltaTime * 4);
 		}
@@ -145,14 +157,14 @@ public class CarController : MonoBehaviour
 	// Rotacao do pedal * angulo maximo de movimentacao * axisAcceleration
 	public void TurnSteeringWheel()
 	{
-		if(driverSteeringWheel)
+		if (driverSteeringWheel)
 		{
 			driverSteeringWheel.transform.localEulerAngles = new Vector3(0f, 0f, -(angleInput * maxAngle));
 		}
 	}
 	void TurnHead()
 	{
-		if(headDirection)
+		if (headDirection)
 		{
 			float viewDirection = inputManager.steer * 0.5f;
 			// usar um lerp da posicao atual ate a direcao especifica
@@ -165,7 +177,7 @@ public class CarController : MonoBehaviour
 		Vector3 pos;
 		Quaternion quat;
 
-		for(int i = 0; i < wheelColliders.Length; i++)
+		for (int i = 0; i < wheelColliders.Length; i++)
 		{
 			wheelColliders[i].GetWorldPose(out pos, out quat);
 			wheelMeshes[i].transform.position = pos;
