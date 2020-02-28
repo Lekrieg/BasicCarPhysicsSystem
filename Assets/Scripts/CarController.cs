@@ -12,8 +12,6 @@ public class CarController : MonoBehaviour
 
 	[Header("Some other things")]
 	public GameObject headDirection;
-	private GameObject carSeat;
-	private GameObject playerPrefabModel;
 
 	[Header("Managers")]
 	public InputManager inputManager;
@@ -42,19 +40,10 @@ public class CarController : MonoBehaviour
 	public Transform centerOfMass;
 	public Rigidbody carRigidbody;
 
-	private void Awake()
-	{
-		carSeat = GameObject.Find("Seat");
-
-		GameObject playerModel = Resources.Load<GameObject>("Prefabs/Haruko");
-		playerPrefabModel = Instantiate(playerModel, carSeat.transform);
-
-		playerPrefabModel.transform.parent = carSeat.transform;
-	}
-
 	void Start()
 	{
 		inputManager = GetComponent<InputManager>();
+		uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
 
 		if (centerOfMass)
 		{
